@@ -88,7 +88,11 @@ function Toolbar(props) {
             Characters
           </Link>
         </div>
-
+        <div>
+          <Link to='login'>
+            Login
+          </Link>
+        </div>
         {showComicControls && <ComicControls comics={comics}
                                              dispatch={dispatch}/>}
         {showCreatorControls && <CreatorControls creators={creators}
