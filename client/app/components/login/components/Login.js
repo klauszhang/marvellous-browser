@@ -39,7 +39,7 @@ class Login extends React.PureComponent {
   }
 
   render() {
-    const { router, dispatch } = this.props
+    const { router, dispatch, login } = this.props
     const { goBack } = router
     return (
       <div className="Login">
@@ -49,6 +49,9 @@ class Login extends React.PureComponent {
           </div>
           Please login with your Email and
           password
+          {login.errorMessage && (
+            <div className="error">{login.errorMessage}</div>
+          )}
           <form
             className="input"
             onSubmit={evt => {

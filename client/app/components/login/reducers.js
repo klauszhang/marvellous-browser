@@ -6,6 +6,7 @@ import {
 } from './constants'
 
 const initialState = {
+  errorMessage: null,
   user: {
     email: null
   }
@@ -20,6 +21,12 @@ export function login(
       const { email } = Object.values(
         payload.data
       )[0]
+      if (email === null) {
+        return Object.assign({}, state, {
+          errorMessage: 'wrong username/password'
+        })
+      }
+
       return Object.assign({}, state, {
         user: { email }
       })
