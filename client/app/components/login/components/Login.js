@@ -64,7 +64,6 @@ class Login extends React.PureComponent {
                   'email'
                 )}
                 type="email"
-                defaultValue="hao@rrr.eee"
               />
             </label>
             <br />
