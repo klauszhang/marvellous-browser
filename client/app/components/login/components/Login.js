@@ -19,6 +19,19 @@ class Login extends React.PureComponent {
     this.updateValue = curry((field, evt) => {
       this.setState({ [field]: evt.target.value })
     })
+
+    this.renderInput = curry((title, field) => {
+      return (
+        <label>
+          {title}
+          <input
+            value={this.state[field]}
+            onChange={this.updateValue(field)}
+            type={field}
+          />
+        </label>
+      )
+    })
   }
 
   componentWillUpdate(props) {
@@ -47,7 +60,9 @@ class Login extends React.PureComponent {
           Please login with your Email and
           password
           {login.errorMessage && (
-            <div className="error">{login.errorMessage}</div>
+            <div className="error">
+              {login.errorMessage}
+            </div>
           )}
           <form
             className="input"
@@ -56,27 +71,11 @@ class Login extends React.PureComponent {
               dispatch(loginAction(this.state))
             }}
           >
-            <label>
-              Email
-              <input
-                value={this.state.email}
-                onChange={this.updateValue(
-                  'email'
-                )}
-                type="email"
-              />
-            </label>
+            {this.renderInput('Email')('email')}
             <br />
-            <label>
-              Password
-              <input
-                value={this.state.password}
-                onChange={this.updateValue(
-                  'password'
-                )}
-                type="password"
-              />
-            </label>
+            {this.renderInput('Password')(
+              'password'
+            )}
             <div className="actions">
               <button
                 type="submit"
