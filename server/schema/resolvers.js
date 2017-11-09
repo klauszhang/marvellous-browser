@@ -106,7 +106,7 @@ export const resolvers = {
       { credential },
       { userStore }
     ) => ({
-      success: userStore.login(credential)
+      email: userStore.login(credential)
     }),
     isEmailRegistered: (
       _,

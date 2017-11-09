@@ -54,21 +54,14 @@ input UserCredentialInput{
   password:String!
 }
 
-# indicate if the login is successful
-type LoginResult{
-  success:Boolean
-  email:String
-}
-
 # indicate if the user already exists
 type EmailAvalibilityCheckResult{
   isUserExist:Boolean
 }
 
-
 type Query {
   # login a user with credential
-  login(credential:UserCredentialInput!):LoginResult
+  login(credential:UserCredentialInput!):User
   
   # check if an user exists
   isEmailRegistered(email:String!):EmailAvalibilityCheckResult

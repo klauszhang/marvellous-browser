@@ -17,7 +17,6 @@ import {
 class UserStore {
   constructor() {
     this._database = {};
-
     // register
     this.register = compose(
       this._addUser,
@@ -25,10 +24,9 @@ class UserStore {
     );
 
     // check existance
-    this.isUserExist = compose(
-      email => !!this._database[email],
-      isStringInvalid
-    );
+    this.isUserExist = email =>
+      !!this._database[email] ||
+      isStringInvalid(email);
 
     // login
     this.login = compose(
@@ -47,8 +45,7 @@ class UserStore {
     const user = { password };
 
     this._database[email] = user;
-
-    return {email};
+    return { email };
   }
 
   _validateUser({ email, password }) {
@@ -57,9 +54,9 @@ class UserStore {
       typeof user === 'undefined' ||
       user.password !== password
     ) {
-      return false;
+      return null;
     } else {
-      return true;
+      return email;
     }
   }
 }
