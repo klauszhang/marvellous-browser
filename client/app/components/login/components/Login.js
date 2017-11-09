@@ -1,33 +1,82 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { connect } from 'react-redux'
+
+import { curry, isNil, isEmpty } from 'ramda'
+import { LOGIN_USER_LOGIN } from '../constants'
+
+import { IS_USER_EXIST_QUERY } from '../queries'
+import { loginAction } from '../actions'
+import { client } from '../../../client'
 
 import './Login.pcss'
 
 class Login extends React.PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      email: '',
+      password: ''
+    }
+
+    this.updateValue = curry((field, evt) => {
+      this.setState({ [field]: evt.target.value })
+    })
+  }
+
+  componentWillUpdate(props) {
+    const user = props.login.user
+    if (
+      isNil(user) ||
+      isNil(user.email) ||
+      isEmpty(user.email)
+    ) {
+      // if user is not logged in
+      return
+    }
+    // if user is logged in, redirect it back
+    this.props.router.goBack()
+  }
+
   render() {
-    const { goBack } = this.props.router
+    const { router, dispatch } = this.props
+    const { goBack } = router
     return (
       <div className="Login">
         <div className="wrapper">
           <div className="close" onClick={goBack}>
             X
           </div>
-          Please login with your Email and password
+          Please login with your Email and
+          password
           <form
             className="input"
-            onSubmit={(evt) => {
-              evt.preventDefault();
-              console.log('submit')
+            onSubmit={evt => {
+              evt.preventDefault()
+              dispatch(loginAction(this.state))
             }}
           >
             <label>
               Email
-              <input type="email" />
+              <input
+                value={this.state.email}
+                onChange={this.updateValue(
+                  'email'
+                )}
+                type="email"
+                defaultValue="hao@rrr.eee"
+              />
             </label>
             <br />
             <label>
               Password
-              <input type="password" />
+              <input
+                value={this.state.password}
+                onChange={this.updateValue(
+                  'password'
+                )}
+                type="password"
+              />
             </label>
             <div className="actions">
               <button
@@ -45,4 +94,8 @@ class Login extends React.PureComponent {
   }
 }
 
-export default Login
+export default connect(state => {
+  return {
+    login: state.login
+  }
+})(Login)
