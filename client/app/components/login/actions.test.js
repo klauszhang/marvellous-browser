@@ -1,6 +1,4 @@
 import { loginActionCurry } from './actions'
-
-import { LOGIN_USER_LOGIN_FULFILLED } from './constants'
 const { expect, describe, it } = global
 
 describe('actions', async () => {
@@ -9,6 +7,7 @@ describe('actions', async () => {
       email: 'foo@bar.quark',
       password: 'secret'
     }
+    // eslint-disable-next-line 
     const stubQuery = jest
       .fn()
       .mockReturnValueOnce(
@@ -31,7 +30,8 @@ describe('actions', async () => {
           })
         )
       )
-
+      
+    // eslint-disable-next-line 
     const stubMutate = jest.fn().mockReturnValue(
       new Promise(resolve =>
         resolve({

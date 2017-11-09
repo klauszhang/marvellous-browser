@@ -2,11 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { curry, isNil, isEmpty } from 'ramda'
-import { LOGIN_USER_LOGIN } from '../constants'
 
-import { IS_USER_EXIST_QUERY } from '../queries'
 import { loginAction } from '../actions'
-import { client } from '../../../client'
 
 import './Login.pcss'
 
